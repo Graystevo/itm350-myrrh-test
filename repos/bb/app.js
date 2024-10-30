@@ -27,28 +27,35 @@ new Vue({
     addEvent: function () {
       if (this.event.title.trim()) {
         this.$http.post('/api/events', this.event)
-          .success(function (res) {
-            this.events.push(this.event);
+          .then((res) => {
+            this.events.push({ ...this.event }); // Create a new object to avoid reactivity issues
+            this.event = { title: '', detail: '', date: '' }; // Reset form
             console.log('Event added!');
           })
-          .error(function (err) {
+          .catch((err) => {
             console.log(err);
           });
       }
     },
 
     deleteEvent: function (id) {
-      if (confirm('Are you sure you want to delete this event?')) {        
-        this.$http.delete('api/events/' + id)
-          .success(function (res) {
-            console.log(res);
-            var index = this.events.find(x => x.id === id)
-            this.events.splice(index, 1);
+      console.log(`Sending DELETE request for event ID: ${id}`); // Log the ID for verification
+    
+      if (confirm('Are you sure you want to delete this event?')) {
+        this.$http.delete(`/api/events/${id}`)
+          .then((res) => {
+            console.log('Event deleted successfully!');
+            const index = this.events.findIndex((x) => x.id === id);
+            if (index !== -1) {
+              this.events.splice(index, 1); // Remove from local list
+            }
           })
-          .error(function (err) {
-            console.log(err);
+          .catch((err) => {
+            console.error('Error deleting event:', err);
           });
       }
     }
+    
+    
   }
 });
