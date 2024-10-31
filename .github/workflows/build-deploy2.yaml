@@ -21,7 +21,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          cd F:\devops\itm350-myrrh-test\repos\bb
+          cd repos/bb
           npm install
       
       - name: Log in to Docker Hub
