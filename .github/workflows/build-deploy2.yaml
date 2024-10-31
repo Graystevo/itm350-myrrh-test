@@ -18,8 +18,10 @@ jobs:
 
       - name: Check out the repo
         uses: actions/checkout@v4
-
-      - run: |
+      
+      - name: Install dependencies
+        run: |
+          cd F:\devops\itm350-myrrh-test\repos\bb
           npm install
       
       - name: Log in to Docker Hub
