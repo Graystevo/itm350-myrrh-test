@@ -6,7 +6,7 @@ on:
     types:
       - closed
 env:
-  REPO_NAME: {graystevo}/itm350-{myrrh}-bb
+  REPO_NAME: {Graystevo}/itm350-{myrrh}-test
 
 jobs:
   if_merged:
