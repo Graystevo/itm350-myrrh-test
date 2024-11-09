@@ -19,7 +19,9 @@ jobs:
           node-version: '16' # Specify your Node.js version
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd repos/bb
+          npm install
 
       - name: Run tests with coverage
         run: npm test -- --coverage
