@@ -24,7 +24,9 @@ jobs:
           npm install
 
       - name: Run tests with coverage
-        run: npm test -- --coverage
+        run: |
+          cd repos
+          npm test -- --coverage
 
       - name: Check coverage threshold
         run: |
