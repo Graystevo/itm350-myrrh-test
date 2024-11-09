@@ -5,11 +5,7 @@
   },
   "dependencies": {
   },
-  "jest": {
-  "collectCoverage": true,
-  "coverageReporters": ["json", "lcov", "text", "clover"],
-  "coverageDirectory": "coverage"
-   },
+  
   "scripts": {
      "start": "node server.js",
      "test": "jest",
