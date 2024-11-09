@@ -20,14 +20,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd repos/bb
-          npm install
-          cd repos/
+          cd bb
           npm install
 
       - name: Run tests with coverage
         run: |
-          cd repos/
           npm test -- --coverage
 
       - name: Check coverage threshold
