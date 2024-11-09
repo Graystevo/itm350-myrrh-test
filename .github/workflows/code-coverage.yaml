@@ -22,6 +22,8 @@ jobs:
         run: |
           cd repos/bb
           npm install
+          cd repos/
+          npm install
 
       - name: Run tests with coverage
         run: |
