@@ -1,12 +1,12 @@
 module.exports = {
   collectCoverage: true,
-  coverageReporters: ["json", "lcov", "text", "clover"],
+  coverageReporters: ["json-summary", "lcov", "text", "clover"],
   coverageDirectory: "coverage",
   coverageThreshold: {
     global: {
       lines: 50
     },
-    "./src/*.js": {
+    "./src/**/*.js": {
       lines: 80
     }
   }
