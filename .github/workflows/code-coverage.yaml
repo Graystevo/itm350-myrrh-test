@@ -1,0 +1,42 @@
+name: Code Coverage Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-and-coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Specify your Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests with coverage
+        run: npm test -- --coverage
+
+      - name: Check coverage threshold
+        run: |
+          COVERAGE=$(npx coverage-checker coverage/coverage-summary.json 50)
+          if [ "$COVERAGE" -lt 50 ]; then
+            echo "Code coverage is below 50%!"
+            exit 1
+          fi
+        env:
+          COVERAGE_THRESHOLD: 50
+
+      - name: Comment on PR with coverage
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            **Code Coverage:** ${{ steps.test-and-coverage.outputs.coverage }}%
+
