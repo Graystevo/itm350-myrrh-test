@@ -45,5 +45,7 @@ jobs:
           file: ./bb/Dockerfile
           push: true
           
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            ${{ steps.meta.outputs.tags }},
+            ${{ env.REPO_NAME }}:latest  # Always push 'latest' tag
           labels: ${{ steps.meta.outputs.labels }}
