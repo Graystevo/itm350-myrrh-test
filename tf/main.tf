@@ -25,7 +25,7 @@ resource "aws_subnet" "subnet-pub1" {
 }
 
 resource "aws_subnet" "subnet-pub2" {
- TODO:
+ 
  vpc_id                  = aws_vpc.ecs-vpc.id
  cidr_block              = cidrsubnet(aws_vpc.ecs-vpc.cidr_block, 8, 2)
  map_public_ip_on_launch = true
@@ -48,7 +48,7 @@ resource "aws_subnet" "subnet-priv1" {
 }
 
 resource "aws_subnet" "subnet-priv2" {
- TODO:
+ 
  vpc_id                  = aws_vpc.ecs-vpc.id
  cidr_block              = cidrsubnet(aws_vpc.ecs-vpc.cidr_block, 8, 4)
  map_public_ip_on_launch = true
@@ -60,7 +60,7 @@ resource "aws_subnet" "subnet-priv2" {
 }
 
 resource "aws_internet_gateway" "internet_gateway" {
- TODO:
+ 
   vpc_id = aws_vpc.ecs-vpc.id
   tags = {
    Name = "internet_gateway"
@@ -73,8 +73,7 @@ resource "aws_eip" "nat_gateway" {
 }
 
 resource "aws_nat_gateway" "nat_gw" {
-  TODO:
-  vpc_id = aws_vpc.ecs-vpc.id
+
   tags = {
     Name = "NAT_gw"
   }
@@ -85,7 +84,7 @@ resource "aws_nat_gateway" "nat_gw" {
 }
 
 resource "aws_route_table" "route_table" {
-TODO:
+
   vpc_id = aws_vpc.ecs-vpc.id
   route {
    cidr_block = "0.0.0.0/0"
@@ -95,11 +94,11 @@ TODO:
 }
 
 resource "aws_route_table" "private_route_table" {
-TODO:
+
   vpc_id = aws_vpc.ecs-vpc.id
   route {
    cidr_block = "0.0.0.0/0"
-   gateway_id = aws_nat_gateway.NAT_gw.id
+   gateway_id = aws_nat_gateway.nat_gw.id
  }
 
 }
@@ -110,25 +109,25 @@ resource "aws_route_table_association" "subnet_route" {
 }
 
 resource "aws_route_table_association" "subnet2_route" {
-TODO:
+
  subnet_id      = aws_subnet.subnet-pub2.id
  route_table_id = aws_route_table.route_table.id
 }
 
 resource "aws_route_table_association" "priv_subnet1_route" {
-TODO:
+
  subnet_id      = aws_subnet.subnet-priv1.id
  route_table_id = aws_route_table.private_route_table.id
 }
 
 resource "aws_route_table_association" "priv_subnet2_route" {
-TODO:
+
  subnet_id      = aws_subnet.subnet-priv2.id
  route_table_id = aws_route_table.private_route_table.id
 }
 
 resource "aws_security_group" "alb-http-sg" {
-TODO:
+
   ingress {
    from_port   = 0
    to_port     = 0
@@ -151,7 +150,7 @@ TODO:
 }
 
 resource "aws_security_group" "ecs-cluster-sg" {
-TODO:
+
   ingress {
 	    from_port   = 32153 
 	    to_port     = 65535
@@ -179,12 +178,7 @@ TODO:
 
 resource "aws_key_pair" "ecs-node-kp" {
   key_name   = "ecs-node-key"
-  public_key = "AAAAB3NzaC1yc2EAAAADAQABAAABAQC4O8qz/9ek5nRYj5GRhn5NR1OXyHK5FEpM
-XLboIdtubEwkYHMJekO4NI6kdg3Nwu0hxqK714z5uNcu7OKgHBU5LK7euro6yboX
-tJ33YNK4UzVN47qpI0p+Xzz/q0GA/b2h3DHbEl85QBa7VpbKxfYvlfAoVZwC1kPf
-1d65rGdLW63Jro6QE5CH/0PcCyTwzHh9vV008Ub1OldwZP117L/ym7dCTJeTJt65
-HT8EW9nC3EZn+etdIRgztLwm21H1VagBCf5Z3OwUXHMyGGR3z64BiEhJVTmp1cbc
-0wHTLlny55A1RygR4merWl3Wim9hacCERSTQ2Jx5rfy9bdTx5U5D"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDXvgjPlL91fXygBzzjQq8X02wrAn6tJTjYxgL6ntID/8Hijx5+gS7XXIUoAZo8ZsL7u5KtKPXWn3/5H0N3+vvTiw3PHSbYL7a/b1DYjlOXbFboVvNgz5t21lE4/ubDVF9+9+j1dk4+N0BKoIyZnOdfVlO5ytsnxGo8g/1Bz1GDk1pUiJC+Qs1meKgew8O7eZ1DP8UGrz+pIn5ZvrIOmkuRC2ZinEEKfL/mFM/bK4M6qQm3o8ztmBG9O9E3tIC7NIpxE8iJlqyvkCUVCycinDuY/WH5iYbgzRhcKVK3SHuKtpLCCsA3SBuveVZMxU6z5YxhBSSIuEP5jK7yLTAtlSzr myrrh@LAPTOP-363EIBH5"
 }
 
 resource "aws_launch_template" "ecs_lt" {
@@ -214,7 +208,7 @@ resource "aws_launch_template" "ecs_lt" {
 
 resource "aws_autoscaling_group" "ecs_asg" {
  vpc_zone_identifier = [aws_subnet.subnet-priv1.id, aws_subnet.subnet-priv2.id]
-TODO:
+
 
  desired_capacity    = 2
  max_size            = 3
@@ -233,7 +227,7 @@ TODO:
 }
 
 resource "aws_lb" "ecs_alb" {
-TODO:
+
  name               = "ecs-alb"
  internal           = false
  load_balancer_type = "application"
@@ -246,7 +240,7 @@ TODO:
 }
 
 resource "aws_lb_listener" "ecs_alb_listener" {
-TODO:
+
  load_balancer_arn = aws_lb.ecs_alb.arn
  port              = 80
  protocol          = "HTTP"
@@ -274,7 +268,7 @@ resource "aws_ecs_cluster" "ecs_cluster" {
 }
 
 resource "aws_ecs_capacity_provider" "ecs_capacity_provider" {
-TODO:
+
  name = "test1"
 
   auto_scaling_group_provider {
