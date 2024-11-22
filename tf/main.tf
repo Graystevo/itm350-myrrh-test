@@ -73,7 +73,8 @@ resource "aws_eip" "nat_gateway" {
 }
 
 resource "aws_nat_gateway" "nat_gw" {
-
+  allocation_id = aws_eip.nat_gateway.id  # Ensure EIP is correctly referenced
+  subnet_id     = aws_subnet.subnet-pub1.id  # Use one of your public subnets
   tags = {
     Name = "NAT_gw"
   }
@@ -143,9 +144,9 @@ resource "aws_security_group" "alb-http-sg" {
    protocol    = "-1"
    cidr_blocks = ["0.0.0.0/0"]
  }
+  vpc_id = aws_vpc.ecs-vpc.id
   tags = {
    Name = "alb-http-sg"
-   vpc_id = aws_vpc.ecs-vpc.id
  }
 }
 
@@ -170,9 +171,9 @@ resource "aws_security_group" "ecs-cluster-sg" {
       protocol    = "-1"
       cidr_blocks = ["0.0.0.0/0"]
 	}
+ vpc_id = aws_vpc.ecs-vpc.id
  tags = {
    Name = "ecs-cluster-sg"
-   vpc_id = aws_vpc.ecs-vpc.id
  }
 }
 
