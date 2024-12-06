@@ -352,3 +352,22 @@ resource "aws_ecs_service" "ecs_service" {
 
  depends_on = [aws_autoscaling_group.ecs_asg]
 }
+
+resource "aws_dynamodb_table" "event-table" {
+  name           = "event"
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 5
+  write_capacity = 5
+  hash_key       = "id"
+  
+
+  attribute {
+    name = "id"
+    type = "N"
+  }
+
+  tags = {
+    Name        = "event-table"
+    Environment = "production"
+  }
+}
