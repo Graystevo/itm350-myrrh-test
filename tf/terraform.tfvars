@@ -5,6 +5,6 @@ container_port              = 8080
 instance_name_prefix	    = "itm350-node"
 instance_type               = "t2.micro"
 lab_role                    = "arn:aws:iam::237235938428:role/LabRole"
-region                      = "us-east-1"
+region                      = "us-west-2"
 vpc_cidr		            = "10.0.0.0/16"
 vpc_prefix		            = "ecs-vpc"
