@@ -21,11 +21,10 @@ jobs:
       - name: Install dependencies
         run: |
           ls -l
-          cd itm350-myrrh-test
           npm install
       
-      - name: Debug permissions
-        run: ls -l node_modules/.bin/
+      # - name: Debug permissions
+      #   run: ls -l node_modules/.bin/
 
       - name: Add execute permission for Jest
         run: chmod +x ./node_modules/.bin/jest
