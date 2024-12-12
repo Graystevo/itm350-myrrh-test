@@ -32,7 +32,7 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          npm test -- --coverage
+          npm test --coverage
 
       - name: Check coverage threshold
         run: |
