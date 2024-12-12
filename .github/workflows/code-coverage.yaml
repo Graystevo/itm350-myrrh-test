@@ -20,7 +20,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd ./itm350-myrrh-test
+          ls -l
+          cd itm350-myrrh-test
           npm install
       
       - name: Debug permissions
